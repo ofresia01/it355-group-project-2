@@ -4,7 +4,7 @@ REM Define the relative path to the Java source files
 SET SOURCE_PATH=src\chat_room
 
 REM Define the name of the output folder within src
-SET OUTPUT_FOLDER=src\output
+SET OUTPUT_FOLDER=out
 
 ECHO Compiling server...
 javac -d %OUTPUT_FOLDER% %SOURCE_PATH%\ChatServer.java %SOURCE_PATH%\ClientHandler.java %SOURCE_PATH%\Main.java

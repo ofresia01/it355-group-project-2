@@ -14,6 +14,8 @@ public class App {
         String name = GetInput.getNonEmptyString("Please enter a name to begin: ");
 
         User user = new User(name); // CWE-908 - User input is non-empty and safe, can initialize user object, ensures not null.
-        System.out.println("Hello " + user.getName() + "! Let's get started.");
+        System.out.println("Hello " + user.getName() + "! Let's get started." +
+        "\nYour balance is $" + user.getBalance() + ".");
+        GetInput.getNonEmptyString("Enter anything to continue: ");
     }
 }

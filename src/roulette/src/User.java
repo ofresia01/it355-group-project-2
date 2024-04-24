@@ -4,7 +4,6 @@ public class User {
     
     public User(String name) {
         this.name = name;
-        this.balance = 500;
     } 
 
     public String getName() {

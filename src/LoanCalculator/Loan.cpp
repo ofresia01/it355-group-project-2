@@ -57,11 +57,34 @@ double Loan::getRemainingAmount()
     return currentlyOwed;
 }
 
-void Loan::print()
+void Loan::print() const
 {
     cout<<"Loan Holder: "<<person.getName()<<endl;
     cout<<"Total Loan Amount: "<<this->totalAmount<<endl;
     cout<<"Term Length: "<<this->termLength<<" Years"<<endl;
     cout<<"Interest Rate: "<<this->interestRate<<endl;
     cout<<"Amount Left to Pay: "<<this->currentlyOwed<<endl;
+}
+
+string Loan::getName() const
+{
+    return this->person.getName();
+}
+
+void CarLoan::print() const
+{
+    cout<<"Type of Loan: Car Loan"<<endl;
+    Loan::print();
+}
+
+void HouseLoan::print() const
+{
+    cout<<"Type of Loan: House Loan"<<endl;
+    Loan::print();
+}
+
+void BusinessLoan::print() const
+{
+    cout<<"Type of Loan: Business Loan"<<endl;
+    Loan::print();
 }

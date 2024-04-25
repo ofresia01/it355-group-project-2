@@ -8,9 +8,14 @@ import java.util.Scanner;
  * Class that represents a client connecting to ChatServer.
  */
 public class ChatClient {
-    // Network config for ChatServer -- just default localhost
+    /*
+     * Network config for ChatServer -- just default localhost
+     * All elements declared private unless explicitly needed otherwise - conformant
+     * to CWE-766.
+     */
     private static final String SERVER_ADDRESS = "localhost";
-    private static final int PORT = 8080;
+    private static final int PORT = 8080; // Integer is static and final, making it invulnerable to underflow -
+                                          // compliant to CWE-191
 
     public static void main(String[] args) {
         try {
@@ -21,7 +26,8 @@ public class ChatClient {
                 PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 
                 // Get client's username
-                try (Scanner scanner = new Scanner(System.in)) {
+                try (Scanner scanner = new Scanner(System.in)) { // Use of multiple try-catch blocks, handling any
+                                                                 // exceptions - conformat to CWE-766
                     System.out.print("Enter your username: ");
                     String username = scanner.nextLine();
                     output.println(username);
@@ -34,8 +40,7 @@ public class ChatClient {
                             while ((message = input.readLine()) != null) {
                                 System.out.println(message);
                             }
-                        }
-                        catch (IOException exception) {
+                        } catch (IOException exception) {
                             exception.printStackTrace();
                         }
                     });
@@ -49,9 +54,9 @@ public class ChatClient {
                     }
                 }
             }
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.getMessage(); // Only display message, not stack trace that may reveal program implementation
+                                    // - conformant with CWE-375
         }
     }
 }

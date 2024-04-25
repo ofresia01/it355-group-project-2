@@ -6,6 +6,8 @@ import java.net.*;
 /*
  * Class responsible for the handling of individual client connections.
  * Runnable thread that takes a Socket and allows for the socket to send and receive messages.
+ * No `switch` statements that omit `break`s, conformant with CWE-484
+ * No explicit invocation of `finalize()`, conformant with CWE-586
  */
 public class ClientHandler extends Thread {
     private Socket socket;
@@ -33,25 +35,24 @@ public class ClientHandler extends Thread {
                 System.out.println(username + ": " + message);
                 ChatServer.sendMessage(username + ": " + message, this);
             }
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
             System.err.println("Client error: " + exception.getMessage());
-        }
-        finally {
+        } finally {
             try {
                 // Connection to client lost - disconnect them from ChatServer
                 socket.close();
                 ChatServer.removeClient(this);
                 System.out.println("Client disconnected");
-            }
-            catch (IOException exception) {
+            } catch (IOException exception) {
                 System.err.println("Client error trying to disconnect: " + exception.getMessage());
             }
         }
     }
 
     /**
-     * Method invoked by ChatServer that displays messages from other clients to this client
+     * Method invoked by ChatServer that displays messages from other clients to
+     * this client
+     * 
      * @param message The message to be displayed.
      */
     public void sendMessage(String message) {

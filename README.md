@@ -7,6 +7,9 @@ Multithreaded Java program that facilitates message-passing between multiple cli
 ```batch
 test-chat-room.bat
 ```
+## roulette
+Simulation of a simplified casino roulette table.
+#Testing
 ```batch
 test-roulette.bat
 ```

@@ -1,0 +1,13 @@
+Legend/Multipliers
+EN -    Even Number    - Bet x2
+ON -    Odd Number     - Bet x2
+RD -    Any Red        - Bet x2
+BK -    Any Black      - Bet x2
+FH -    Spots 1-18     - Bet x2
+SH -    Spots 19-36    - Bet x2
+FT -    Spots 1-12     - Bet x3
+ST -    Spots 13-24    - Bet x3
+TT -    Spots 25-36    - Bet x3
+ G -    Green (AKA 0)  - Bet x18
+Any singular number grants Bet x36.
+The wheel contains 2 green spaces, 18 red spaces, and 18 black spaces (1-36).

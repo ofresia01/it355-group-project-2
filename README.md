@@ -11,7 +11,7 @@ test-chat-room.bat
 Calculate loan payments for several different loan types.
 ### Testing
 ```batch
-Coming soon
+test-calculator.bat
 ```
 ## roulette (Weakness in Implementation, in Java)
 Simulation of a simplified casino roulette table.

@@ -29,6 +29,9 @@ public class Game {
             } catch (NumberFormatException e) {
                 betInt = -1;
             }
+            if (betInt == 37) {
+                betInt = 0; // 0 is twice as likely to appear because there are 2 green spots
+            }
             int betAmount = GetInput.getBetAmount("Enter a bet amount: ", user);
             user.setBalance(user.getBalance() - betAmount);
             int spinResult = spinWheel();
@@ -131,8 +134,9 @@ public class Game {
          * CWE-334 - Space of random values is extremely large, taking up entire integer
          * space.
          */
-        return new Random().nextInt(Integer.MAX_VALUE % 36);
+        return new Random().nextInt(Integer.MAX_VALUE) % 38; // 37 counts as the other Green spot (0)
     }
+
 
     /**
      * Clears the console screen by printing control characters.

@@ -7,6 +7,12 @@ Multithreaded Java program that facilitates message-passing between multiple cli
 ```batch
 test-chat-room.bat
 ```
+## LoanCalculator (C++)
+Calculate loan payments for several different loan types.
+### Testing
+```batch
+Coming soon
+```
 ## roulette (Weakness in Implementation, in Java)
 Simulation of a simplified casino roulette table.
 ### Testing

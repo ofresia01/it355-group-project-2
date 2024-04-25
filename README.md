@@ -7,3 +7,6 @@ Multithreaded Java program that facilitates message-passing between multiple cli
 ```batch
 test-chat-room.bat
 ```
+```batch
+test-roulette.bat
+```

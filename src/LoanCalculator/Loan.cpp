@@ -1,8 +1,9 @@
 #include "Loan.h"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
-/* 
+/*
 Doesn't involve direct array access where there's a risk of reading beyond array bounds. Conforms to (CWE-125).
 Doesn't use arrays or array indexing, so there's no risk of improper validation of array indexes. Conforms to (CWE-129).
 Doesn't perform unsigned to signed conversion, so there's no risk of this error. Conforms to (CWE-196).
@@ -13,7 +14,7 @@ Public methods don't return private data structures, ensuring encapsulation. Con
 Initializes all variables before use, so there's no risk of uninitialized variable usage. Conforms to (CWE-457).
 */
 
-/*  
+/*
 CWE-197: Doesn't involve any numeric truncation operations where significant digits might be lost, so this CWE doesn't apply.
 CWE-192: There are no instances in  where integer coercion could lead to unintended behavior, so this CWE is not relevant.
 CWE-396: Doesn't include exception handling with generic catch statements, so this CWE doesn't apply.
@@ -21,7 +22,7 @@ CWE-131: Doesn't perform buffer size calculations in a way that could lead to in
 CWE-787: Properly manages array writes and doesn't allow writes beyond the bounds of allocated memory, so this CWE doesn't apply.
 CWE-242: Doesn't utilize any inherently dangerous functions that could lead to vulnerabilities, so this CWE is not relevant.
 CWE-789: Doesn't involve dynamic memory allocation with potentially excessive size values, so this CWE doesn't apply.
-CWE-805: Doesn't access buffers with incorrect length values, so this CWE doesn't apply. 
+CWE-805: Doesn't access buffers with incorrect length values, so this CWE doesn't apply.
 */
 
 // Constructor for Loan class, initializes loan details
@@ -31,8 +32,8 @@ Loan::Loan(Person loanHolder, double totalLoan, string startDate, double length,
 // Function to make a payment towards the loan
 void Loan::makePayment(double amount)
 {
-        // Check if the payment amount is less than the total loan amount
-    if(totalAmount > amount)
+    // Check if the payment amount is less than the total loan amount
+    if (totalAmount > amount)
     {
         amount = floor(amount * 100) / 100;
         this->totalAmount = this->totalAmount - amount;
@@ -43,23 +44,23 @@ void Loan::makePayment(double amount)
         double amountPayed = this->totalAmount;
         this->totalAmount = 0;
         cout << "Payment of $ " << amountPayed << " made by " << this->person.getName() << endl;
-    } 
+    }
 }
 
 // Function to calculate interest based on the specified type
 double Loan::calculateInterest(string typeOfInterest)
 {
-    if(typeOfInterest.compare("Total Interest") || typeOfInterest.compare("total interest"))
+    if (typeOfInterest.compare("Total Interest") || typeOfInterest.compare("total interest"))
     {
         return this->totalAmount * this->interestRate / 100;
     }
-    else if(typeOfInterest.compare("Interest Left") || typeOfInterest.compare("interest left"))
+    else if (typeOfInterest.compare("Interest Left") || typeOfInterest.compare("interest left"))
     {
         return this->currentlyOwed * this->interestRate / 100;
     }
     else
     {
-        cout<<"Invalid loan calculation."<<endl;
+        cout << "Invalid loan calculation." << endl;
         return 0.0;
     }
 }
@@ -76,7 +77,7 @@ void Loan::scheduledPayment()
     amountToInterest = floor(amountToInterest * 100) / 100;
     double amountToPrincipal = biweeklyPayment - amountToInterest;
 
-    this->totalAmount = this->totalAmount - amountToPrincipal;    
+    this->totalAmount = this->totalAmount - amountToPrincipal;
 }
 
 // Function to get the remaining amount of the loan
@@ -88,11 +89,11 @@ double Loan::getRemainingAmount()
 // Function to print loan details
 void Loan::print() const
 {
-    cout<<"Loan Holder: "<<person.getName()<<endl;
-    cout<<"Total Loan Amount: "<<this->totalAmount<<endl;
-    cout<<"Term Length: "<<this->termLength<<" Years"<<endl;
-    cout<<"Interest Rate: "<<this->interestRate<<endl;
-    cout<<"Amount Left to Pay: "<<this->currentlyOwed<<endl;
+    cout << "Loan Holder: " << person.getName() << endl;
+    cout << "Total Loan Amount: " << this->totalAmount << endl;
+    cout << "Term Length: " << this->termLength << " Years" << endl;
+    cout << "Interest Rate: " << this->interestRate << endl;
+    cout << "Amount Left to Pay: " << this->currentlyOwed << endl;
 }
 
 string Loan::getName() const
@@ -103,20 +104,20 @@ string Loan::getName() const
 // Function to print loan details for a car loan
 void CarLoan::print() const
 {
-    cout<<"Type of Loan: Car Loan"<<endl;
+    cout << "Type of Loan: Car Loan" << endl;
     Loan::print();
 }
 
 // Function to print loan details for a house loan
 void HouseLoan::print() const
 {
-    cout<<"Type of Loan: House Loan"<<endl;
+    cout << "Type of Loan: House Loan" << endl;
     Loan::print();
 }
 
 // Function to print loan details for a business loan
 void BusinessLoan::print() const
 {
-    cout<<"Type of Loan: Business Loan"<<endl;
+    cout << "Type of Loan: Business Loan" << endl;
     Loan::print();
 }

@@ -59,6 +59,11 @@ public class ChatServer {
      */
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
-        client.finalize();
+        try {
+            client.finalize();
+        }
+        catch (Throwable throwedException) {
+            throwedException.getMessage();
+        }
     }
 }

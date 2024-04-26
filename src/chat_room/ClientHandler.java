@@ -30,7 +30,7 @@ public class ClientHandler extends Thread {
 
             // Continually ingest client messages, send them to ChatServer
             String message;
-            //Compliant with CWE-481, is a comparison to null and not an assignment
+            // Compliant with CWE-481, is a comparison to null and not an assignment
             while ((message = input.readLine()) != null) {
                 System.out.println(username + ": " + message);
                 ChatServer.sendMessage(username + ": " + message, this);
@@ -62,18 +62,20 @@ public class ClientHandler extends Thread {
     /**
      * Finalize Method for the ClientHandler Class
      * 
-     * This is compliant with CWE-397 because this method needs to catch all possible exceptions and keep on moving.
-     * This is not a case where specification is lost due to a generic throw because the specific exception is not important.
-     * This is compliant with CWE-568 because super.finalize is called with the finalize method.
+     * This is compliant with CWE-397 because this method needs to catch all
+     * possible exceptions and keep on moving.
+     * This is not a case where specification is lost due to a generic throw because
+     * the specific exception is not important.
+     * This is compliant with CWE-568 because super.finalize is called with the
+     * finalize method.
      */
     protected void finalize() throws Throwable {
-        try{
+        try {
             System.out.println("Performing Finalize");
-        } catch (Throwable e) {
-            throw e;
-        } finally {
             System.out.println("Calling super.finalize");
             super.finalize();
+        } catch (Throwable e) {
+            throw e;
         }
     }
 }

@@ -7,6 +7,7 @@ import java.util.*;
 /*
  * Class that acts as the server host and facilitates all client interactions from ClientHandler.
  * No untrustworthy methods are passed immutable objects - conformant to CWE-374.
+ * All multiple condition expressions handle the default case - conformant to CWE-478
  */
 public class ChatServer {
     // Static member fields declared final - conformant to CWE-500
@@ -48,7 +49,7 @@ public class ChatServer {
             //Compliant with CWE-481, is a comparison and not an assignment
             if (client != sender) {
                 client.sendMessage(message);
-            }
+            }//Default case here is that sender and reciever are the same so no message is sent, would be an empty block so its removed.
         }
     }
 

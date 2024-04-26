@@ -28,6 +28,7 @@ public class ChatServer {
                 // Make a ClientHandler for the newly-connected socket
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clients.add(clientHandler);
+                //Compliant with CWE-572, Uses start() and not run()
                 clientHandler.start(); // Invoke the thread's `run` method
             }
         } catch (IOException exception) {
@@ -44,6 +45,7 @@ public class ChatServer {
      */
     public static void sendMessage(String message, ClientHandler sender) {
         for (ClientHandler client : clients) {
+            //Compliant with CWE-481, is a comparison and not an assignment
             if (client != sender) {
                 client.sendMessage(message);
             }
@@ -57,5 +59,6 @@ public class ChatServer {
      */
     public static void removeClient(ClientHandler client) {
         clients.remove(client);
+        client.finalize();
     }
 }

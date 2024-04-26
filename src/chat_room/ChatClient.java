@@ -37,6 +37,7 @@ public class ChatClient {
                         try {
                             String message;
                             // Read messages from the server and display them to the user
+                            //Compliant with CWE-481, is a comparison to null and not an assignment
                             while ((message = input.readLine()) != null) {
                                 System.out.println(message);
                             }

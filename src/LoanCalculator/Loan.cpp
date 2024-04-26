@@ -33,17 +33,17 @@ Loan::Loan(Person loanHolder, double totalLoan, string startDate, double length,
 void Loan::makePayment(double amount)
 {
     // Check if the payment amount is less than the total loan amount
-    if (totalAmount > amount)
+    if (currentlyOwed > amount)
     {
         amount = floor(amount * 100) / 100;
-        this->totalAmount = this->totalAmount - amount;
+        this->currentlyOwed = this->currentlyOwed - amount;
         cout << "Payment of $ " << amount << " made by " << this->person.getName() << endl;
     }
     else
     {
-        double amountPayed = this->totalAmount;
-        this->totalAmount = 0;
-        cout << "Payment of $ " << amountPayed << " made by " << this->person.getName() << endl;
+        double amountPayed = this->currentlyOwed;
+        this->currentlyOwed = 0;
+        cout << "Payment of $" << amountPayed << " made by " << this->person.getName() << endl;
     }
 }
 
@@ -77,7 +77,7 @@ void Loan::scheduledPayment()
     amountToInterest = floor(amountToInterest * 100) / 100;
     double amountToPrincipal = biweeklyPayment - amountToInterest;
 
-    this->totalAmount = this->totalAmount - amountToPrincipal;
+    this->currentlyOwed = this->currentlyOwed - amountToPrincipal;
 }
 
 // Function to get the remaining amount of the loan
@@ -94,6 +94,7 @@ void Loan::print() const
     cout << "Term Length: " << this->termLength << " Years" << endl;
     cout << "Interest Rate: " << this->interestRate << endl;
     cout << "Amount Left to Pay: " << this->currentlyOwed << endl;
+    cout<<endl;
 }
 
 string Loan::getName() const

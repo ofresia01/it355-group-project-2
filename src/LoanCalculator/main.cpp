@@ -38,6 +38,45 @@ void anythingToContinue()
     cin.get();                                                     // Wait for user to press enter
 }
 
+int convertInput(string inString)
+{
+    int output;
+    try
+    {
+        output = stoi(inString);
+    }
+    catch(std::invalid_argument const& e)
+    {
+        return -1;
+    }
+    catch(std::out_of_range const& e)
+    {
+        return -1;
+    }
+
+    return output;
+    
+}
+
+double convertInputToDouble(string inString)
+{
+    double output;
+    try
+    {
+        output = stod(inString);
+    }
+    catch(std::invalid_argument const& e)
+    {
+        return -1;
+    }
+    catch(std::out_of_range const& e)
+    {
+        return -1;
+    }
+
+    return output;
+}
+
 int main()
 {
     clearConsole();
@@ -75,14 +114,16 @@ int main()
     anythingToContinue();
 
     int choice;
+    string input;
     // Main menu loop
     do
     {
         clearConsole();
         // Display menu options
-        cout << "Please select your choice:\n1: Create a new loanholder\n2: Create a new loan\n3: Print loan information\n4: Exit" << endl;
+        cout << "Please select your choice:\n1: Create a new loanholder\n2: Create a new loan\n3: Print loan information\n4: Make a loan payment\n5: Exit" << endl;
         cout << "Enter your choice here: ";
-        cin >> choice;
+        cin >> input;
+        choice = convertInput(input);
 
         // Process user choice
         switch (choice)
@@ -95,14 +136,16 @@ int main()
             cout << "Please enter loan holder's age: ";
             int age;
             string name;
-            cin >> age;
+            cin >> input;
+            age = convertInput(input);
             if (age < 0 || age > 100)
             {
                 // Validate age input
                 while (age > 100 || age <= 0)
                 {
-                    cout << "You have entered an invalid age. Please enter a valid age(0-99) here: ";
-                    cin >> age;
+                    cout << "You have entered an invalid age. Please enter a valid age(1-99) here: ";
+                    cin >> input;
+                    age = convertInput(input);
                 }
             }
             if (age < 18 && age >= 0)
@@ -142,27 +185,34 @@ int main()
                     cout << "Please enter type of loan you would like to create.\n1: Personal Loan\n2: Car Loan\n3: House Loan\n4: Business Loan" << endl;
                     cout << "Please enter your choice here: ";
                     int loanChoice;
-                    cin >> loanChoice;
+                    cin >> input;
+                    loanChoice = convertInput(input);
+                    
                     while (loanChoice < 1 || loanChoice > 4)
                     {
                         cout << "Invalid choice, please enter a valid choice.\nEnter your choice here: ";
-                        cin >> loanChoice;
+                        cin >> input;
+                        loanChoice = convertInput(input);
                     }
                     cout << "Please enter the total loan amount you'd like to have: $";
                     double totalAmount;
-                    cin >> totalAmount;
+                    cin >> input;
+                    totalAmount = convertInputToDouble(input);
                     while (totalAmount < 0)
                     {
                         cout << "Invalid loan amount. Please enter a valid loan amount: $";
-                        cin >> totalAmount;
+                        cin >> input;
+                        totalAmount = convertInputToDouble(input);
                     }
                     cout << "Please enter how long you'd like the term date to be in years: ";
                     double termLength;
-                    cin >> termLength;
+                    cin >> input;
+                    termLength = convertInputToDouble(input);
                     while (termLength < 0)
                     {
                         cout << "Invalid term length. Please enter a valid term length: ";
-                        cin >> termLength;
+                        cin >> input;
+                        termLength = convertInputToDouble(input);
                     }
 
                     // Create new loan object based on user choice
@@ -233,6 +283,93 @@ int main()
         }
         case 4:
         {
+            clearConsole();
+            cout<<"Current Action: Make a loan payment"<<endl;
+            cin.ignore();
+            cout<<"Please select whether you will be making a scheduled payment or an unscheduled payment\n1: Scheduled payment\n2: Unscheduled payment"<<endl;
+            cout<<"Enter your choice here: ";
+            int paymentType;
+            cin >> input;
+            paymentType = convertInput(input);
+            while(paymentType != 1 && paymentType != 2)
+            {
+                cout<<"Invalid choice. Please enter a valid choice here: ";
+                cin >> input;
+                paymentType = convertInput(input);
+            }
+            string name;
+            cin.ignore();
+            cout<<"Please enter loanholder's name for payment: ";
+            bool validName = false;
+            getline(cin, name);
+            for (const auto &person : people)
+            {
+                if (name == person.getName())
+                {
+                    validName = true;
+                    int numOfLoans = 0;
+                    cout << "Displaying all loans under " << name << endl;
+                    for (const auto &loan : loans)
+                    {
+                        if (loan.getName() == name)
+                        {
+                            numOfLoans++;
+                            cout<<"Loan number "<<numOfLoans<<":"<<endl;
+                            loan.print();
+                        }
+                    }
+                    cout<<"Please select loan you wish to make a payment for."<<endl;
+                    cout<<"Enter loan number here: ";
+                    cin >> input;
+                    int loanNumber = convertInput(input);
+                    while(loanNumber <= 0 || loanNumber > numOfLoans)
+                    {
+                        cout<<"Invalid loan number. Please enter a valid loan number here: ";
+                        cin >> input;
+                        loanNumber = convertInput(input);
+                    }
+
+                    numOfLoans = 0;
+                    for(auto &loan : loans)
+                    {
+                        if(loan.getName() == name)
+                        {
+                            numOfLoans++;
+                            if(numOfLoans == loanNumber)
+                            {
+                                if(paymentType == 1)
+                                {
+                                    loan.scheduledPayment();
+                                    cout<<"Payment successful."<<endl;
+                                }
+                                else if(paymentType == 2)
+                                {
+                                    cout<<"Please enter amount you would like to pay: ";
+                                    cin >> input;
+                                    double amountToPay = convertInputToDouble(input);
+                                    while(amountToPay < 0)
+                                    {
+                                        cout<<"Invalid amount. Please enter a valid amount here: ";
+                                        cin >> input;
+                                        amountToPay = convertInputToDouble(input);
+                                    }
+                                    loan.makePayment(amountToPay);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!validName)
+            {
+                cout << "No loanholders under that name exist." << endl;
+            }
+            anythingToContinue();
+            break;
+        }
+        case 5:
+        {
             // Exit program
             clearConsole();
             cout << "Thank you for using our loan calculator. Goodbye!" << endl;
@@ -241,11 +378,11 @@ int main()
         default:
         {
             // Invalid choice
-            cout << "\nInvalid choice. Please enter a number between 1 and 4." << endl;
+            cout << "\nInvalid choice. Please enter a number between 1 and 6." << endl;
             break;
         }
-        }
-    } while (choice != 4);
+    }
+    } while (choice != 5);
 
     return 0;
 }

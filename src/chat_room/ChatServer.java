@@ -58,7 +58,8 @@ public class ChatServer {
     public static void sendMessage(String message, ClientHandler sender) {
         for (ClientHandler client : clients) {
             //Compliant with CWE-481, is a comparison and not an assignment
-            if (client != sender) {
+            //Compliant with CWE-486, Uses .getClass() and .class and not .getClass().name().
+            if (client != sender && client.getClass() == ClientHandler.class) {
                 client.sendMessage(message);
             }//Default case here is that sender and reciever are the same so no message is sent, would be an empty block so its removed.
         }

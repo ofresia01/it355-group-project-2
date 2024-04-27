@@ -8,10 +8,12 @@ import java.util.*;
  * Class that acts as the server host and facilitates all client interactions from ClientHandler.
  * No untrustworthy methods are passed immutable objects - conformant to CWE-374.
  * All multiple condition expressions handle the default case - conformant to CWE-478
+ * Singleton Pattern is not used in this thread-intensive enironment - conformant to CWE-543
  */
 public class ChatServer {
     // Static member fields declared final - conformant to CWE-500
     private static final int PORT = 8080; // Standard port for localhost
+    private static int messagesRecieved = 0;
     private static Set<ClientHandler> clients = new HashSet<ClientHandler>(); // The set of clients currently connected.
                                                                               // Set is private and static, conformant
                                                                               // to CWE-582
@@ -32,8 +34,12 @@ public class ChatServer {
                 //Compliant with CWE-572, Uses start() and not run()
                 clientHandler.start(); // Invoke the thread's `run` method
             }
+
         } catch (IOException exception) {
             System.err.println("Internal server error: " + exception.getMessage());
+        } finally {
+            //On exit, print total number of messages server recieved
+            System.out.println("Messages Recieved by Server: " + messagesRecieved);
         }
     }
 
@@ -66,5 +72,12 @@ public class ChatServer {
         catch (Throwable throwedException) {
             throwedException.getMessage();
         }
+    }
+
+    /**
+     * Method to update messagesRecieved value
+     */
+    public static void addMessageCount(){
+        messagesRecieved++;
     }
 }

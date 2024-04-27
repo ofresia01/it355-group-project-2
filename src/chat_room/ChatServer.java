@@ -21,7 +21,7 @@ public class ChatServer {
                                                                               // to CWE-582
 
     
-    private Lock lock = new ReentrantLock();
+    private static final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {

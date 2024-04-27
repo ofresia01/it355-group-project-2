@@ -68,7 +68,7 @@ double Loan::calculateInterest(string typeOfInterest)
 // Function to make scheduled payments towards the loan
 void Loan::scheduledPayment()
 {
-    double monthlyPayment = this->totalAmount * ((this->interestRate / 12) * pow((1 + (this->interestRate / 12)), (this->termLength * 12))) / (pow((1 + (this->interestRate / 12)), (this->termLength * 12)) - 1);
+    double monthlyPayment = this->totalAmount * ((this->interestRate / 12) * pow((1 + (this->interestRate / 12)), (this->termLength))) / (pow((1 + (this->interestRate / 12)), (this->termLength)) - 1);
     monthlyPayment = floor(monthlyPayment * 100) / 100;
     double biweeklyPayment = monthlyPayment / 2;
     biweeklyPayment = floor(biweeklyPayment * 100) / 100;

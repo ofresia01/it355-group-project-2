@@ -84,10 +84,10 @@ public class ChatServer {
      */
     public static void addMessageCount(){
         
-        //Synchronization is proper set up so that only one Thread is accessing, conformant to CWE-362
+        //Synchronization is properly setup so that only one Thread is accessing, conformant to CWE-362
         //Operation of updating shared resource is placed in a lock to prevent a race condition, conformant to CWE-366
         //Access to this shared datafield is synchronzied, conformant to CWE-567
-        //This synchronized block is not empty and unnecassaryly slows program, conformant to CWE-585
+        //This synchronized block is not empty and unnecessarily slows program, conformant to CWE-585
         //Lock here
         lock.lock();
 

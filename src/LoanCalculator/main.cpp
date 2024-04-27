@@ -25,11 +25,13 @@ Ensures that any memory is only able to be freed once. Conforms to CWE-415.
 Ensures that resources are released only once. Conforms to CWE-1341.
 */
 
+// Clears the console screen
 void clearConsole()
 {
     cout << "\033[2J\033[1;1H";
 }
 
+// Pauses and waits for user input to continue
 void anythingToContinue()
 {
     cout << "\nPress enter to continue...";
@@ -38,6 +40,7 @@ void anythingToContinue()
     cin.get();                                                     // Wait for user to press enter
 }
 
+// Converts string input to integer
 int convertInput(string inString)
 {
     int output;
@@ -47,17 +50,18 @@ int convertInput(string inString)
     }
     catch(std::invalid_argument const& e)
     {
-        return -1;
+        return -1; // Return -1 if conversion fails
     }
     catch(std::out_of_range const& e)
     {
-        return -1;
+        return -1; // Return -1 if conversion result is out of range
     }
 
     return output;
     
 }
 
+// Converts string input to double
 double convertInputToDouble(string inString)
 {
     double output;
@@ -67,11 +71,11 @@ double convertInputToDouble(string inString)
     }
     catch(std::invalid_argument const& e)
     {
-        return -1;
+        return -1; // Return -1 if conversion fails
     }
     catch(std::out_of_range const& e)
     {
-        return -1;
+        return -1;  // Return -1 if conversion result is out of range
     }
 
     return output;

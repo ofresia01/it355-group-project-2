@@ -3,6 +3,8 @@ package chat_room;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.locks.lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /*
  * Class that acts as the server host and facilitates all client interactions from ClientHandler.
@@ -17,6 +19,9 @@ public class ChatServer {
     private static Set<ClientHandler> clients = new HashSet<ClientHandler>(); // The set of clients currently connected.
                                                                               // Set is private and static, conformant
                                                                               // to CWE-582
+
+    
+    private Lock lock = new ReentrantLock();
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
@@ -78,6 +83,18 @@ public class ChatServer {
      * Method to update messagesRecieved value
      */
     public static void addMessageCount(){
+        
+        //Synchronization is proper set up so that only one Thread is accessing, conformant to CWE-362
+        //Operation of updating shared resource is placed in a lock to prevent a race condition, conformant to CWE-366
+        //Access to this shared datafield is synchronzied, conformant to CWE-567
+        //This synchronized block is not empty and unnecassaryly slows program, conformant to CWE-585
+        //Lock here
+        lock.lock();
+
+        //Update Value
         messagesRecieved++;
+
+        //Unlock here
+        lock.unlock();
     }
 }

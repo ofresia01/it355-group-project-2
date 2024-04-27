@@ -2,6 +2,8 @@ package chat_room;
 
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.locks.lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /*
  * Class responsible for the handling of individual client connections.
@@ -12,6 +14,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private BufferedReader input;
     private PrintWriter output;
+    private Lock lock = new ReentrantLock();
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -34,6 +37,20 @@ public class ClientHandler extends Thread {
             while ((message = input.readLine()) != null) {
                 System.out.println(username + ": " + message);
                 ChatServer.sendMessage(username + ": " + message, this);
+
+                //Update Messages Recieved in ChatServer.
+                //Synchronization is proper set up so that only one Thread is accessing, conformant to CWE-362
+                //Operation of updating shared resource is placed in a lock to prevent a race condition, conformant to CWE-366
+                //Access to this shared datafield is synchronzied, conformant to CWE-567
+                //This synchronized block is not empty and unnecassaryly slows program, conformant to CWE-585
+                //Lock here
+                lock.lock();
+
+                //Update Value
+                ChatServer.addMessageCount();
+
+                //Unlock here
+                lock.unlock();
             }
         } catch (IOException exception) {
             System.err.println("Client error: " + exception.getMessage());
